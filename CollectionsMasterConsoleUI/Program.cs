@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace CollectionsMasterConsoleUI
 {
@@ -13,42 +15,65 @@ namespace CollectionsMasterConsoleUI
 
             #region Arrays
             //TODO: Create an integer Array of size 50
-            
+            int[] myArray = new int[50];
+
 
             //TODO: Create a method to populate the number array with 50 random numbers that are between 0 and 50
-            
+            Populater(myArray);
 
             //TODO: Print the first number of the array
+            Console.WriteLine("First number in array.")
+            Console.WriteLine(myArray[0]);
+            Console.WriteLine();
 
-            //TODO: Print the last number of the array            
+            //TODO: Print the last number of the array
+            Console.WriteLine("Last number in array.");
+            Console.WriteLine();
+            Console.WriteLine(myArray[myArray.Length - 1]);
 
             Console.WriteLine("All Numbers Original");
+
             //UNCOMMENT this method to print out your numbers from arrays or lists
-            //NumberPrinter();
+            NumberPrinter(myArray);
             Console.WriteLine("-------------------");
 
             //TODO: Reverse the contents of the array and then print the array out to the console.
             //Try for 2 different ways
             /*  1) First way, using a custom method => Hint: Array._____(); 
-                2) Second way, Create a custom method (scroll to bottom of page to find ⬇⬇⬇)
-            */
+                2) Second way, Create a custom method (scroll to bottom of page to find ⬇⬇⬇) */
+
+            Array.Reverse(myArray);
+            NumberPrinter(myArray);
+
 
             Console.WriteLine("All Numbers Reversed:");
 
             Console.WriteLine("---------REVERSE CUSTOM------------");
+            ReverseArray(myArray);
+            NumberPrinter(myArray);
 
             Console.WriteLine("-------------------");
 
             //TODO: Create a method that will set numbers that are a multiple of 3 to zero then print to the console all numbers
             Console.WriteLine("Multiple of three = 0: ");
-            
+            ThreeKiller(myArray);
+            NumberPrinter(myArray);
+            Console.WriteLine();
+
+
+
+
+
+
+
 
             Console.WriteLine("-------------------");
 
             //TODO: Sort the array in order now
             /*      Hint: Array.____()      */
             Console.WriteLine("Sorted numbers:");
-            
+            Array.Sort(myArray);
+
 
             Console.WriteLine("\n************End Arrays*************** \n");
             #endregion
@@ -58,24 +83,33 @@ namespace CollectionsMasterConsoleUI
 
             /*   Set Up   */
             //TODO: Create an integer List
-            
+            List<int> myList = new List<int>();
 
             //TODO: Print the capacity of the list to the console
-            
+
+
+            Console.WriteLine(myList.Capacity);
+
 
             //TODO: Populate the List with 50 random numbers between 0 and 50 you will need a method for this            
-            
+            Populater(myList);
+            NumberPrinter(myList);
 
             //TODO: Print the new capacity
-            
-
+            Console.WriteLine("New Capacity:");
+            Console.WriteLine(myList.Capacity);
+            Console.WriteLine();
             Console.WriteLine("---------------------");
 
             //TODO: Create a method that prints if a user number is present in the list
+
             //Remember: What if the user types "abc" accident your app should handle that!
+
             Console.WriteLine("What number will you search for in the number list?");
-            
+            NumberChecker(myList);
+            string numberLookingFor = int.Parse(Console.ReadLine());
             Console.WriteLine("-------------------");
+            NumberChecker(myList, numberLookingFor);
 
             Console.WriteLine("All Numbers:");
             //UNCOMMENT this method to print out your numbers from arrays or lists
@@ -85,54 +119,125 @@ namespace CollectionsMasterConsoleUI
 
             //TODO: Create a method that will remove all odd numbers from the list then print results
             Console.WriteLine("Evens Only!!");
-            
+            OddKiller(myList);
+            NumberPrinter(myList);
+            Console.WriteLine();
+
             Console.WriteLine("------------------");
 
             //TODO: Sort the list then print results
             Console.WriteLine("Sorted Evens!!");
-            
+
             Console.WriteLine("------------------");
 
             //TODO: Convert the list to an array and store that into a variable
-            
+            var newArray = myList.ToArray();
 
             //TODO: Clear the list
-            
+            myList.Clear();
+            Console.WriteLine("This list is clear. Here are all the numbers in the list now");
+            NumberPrinter(myList);
+
 
             #endregion
         }
 
         private static void ThreeKiller(int[] numbers)
         {
-            
+            for (int i = 0; i < numbers.Length; i++)
+            { 
+                if (numbers[i] % 3 == 0)
+                {
+                   numbers[i] = 0;
+                }
+
+            }
         }
 
         private static void OddKiller(List<int> numberList)
         {
-            
+            for (int i = numberList.Count-1; i >= 0; i--)
+            {
+                if (numberList[i] % 2 != 0) 
+                {
+                    numberList.Remove(numberList[i]);
+                }
+
+            }
         }
 
         private static void NumberChecker(List<int> numberList, int searchNumber)
         {
+            bool foundNumber = false;
+            foreach (var item in numberList)
+            {
+                if (item == searchNumber)
+                {
+                    Console.WriteLine($"{searchNumber} is in your list");
+                    foundNumber = true;
+                    break;
+                }
+                if (foundNumber == false)
+                {
+                    Console.WriteLine($"{searchNumber} is not in you list");
+                }
             
+            }
+
         }
 
         private static void Populater(List<int> numberList)
+
         {
-            Random rng = new Random();
+
+            Random instance = new Random();
+
+            for (int i = 0; i < numberList.Count; i++)
+            {
+                int randomNumber = instance.Next(0, 51);
+                numberList.Add(randomNumber);
+            }
 
         }
 
         private static void Populater(int[] numbers)
         {
-            Random rng = new Random();
+            Random instance = new Random();
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                int r = instance.Next(0, 51);
+                numbers[i] = r;
+            }
 
-        }        
+
+        }
 
         private static void ReverseArray(int[] array)
         {
-            
+            int[] newArray = new int[array.Length];
+            int index = 0;
+            for (int i = array.Length - 1; i >= 0; i--)
+            {
+                newArray[index] = array[i];
+                index++;
+            }
+            foreach (var item in newArray)
+            {
+                Console.Writeline
+            }
+
+
+
+
+
         }
+        
+        
+        
+          
+              
+
+
 
         /// <summary>
         /// Generic print method will iterate over any collection that implements IEnumerable<T>
